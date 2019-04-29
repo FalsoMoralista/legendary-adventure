@@ -24,7 +24,7 @@ optimizer = keras.optimizers.Adadelta(lr=1.0,rho=0.95, epsilon=None, decay=0.001
 # Adds a output layer with the activation function that will get us values between 0 and 1
 classifier.add(Dense(units=1, activation='sigmoid'))
 # Compiles the network adding up the loss function, the customm optimizer and the metrics to we evaluate
-classifier.compile(optimizer=optimizer,loss='binary_crossentropy', metrics=['binary_accuracy'])
+classifier.compile(optimizer=optimizer,loss='binary_crossentropy', )
 
 #classifier.compile(optimizer='adadelta',loss='binary_crossentropy', metrics=['binary_accuracy'])
 # Fits up the data to the network
