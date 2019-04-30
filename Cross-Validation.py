@@ -8,23 +8,29 @@ from sklearn.model_selection import cross_val_score
 predictors = pd.read_csv('/home/luciano/ic/lectures/breast_cancer/datasets/entradas-breast.csv')
 classes = pd.read_csv('/home/luciano/ic/lectures/breast_cancer/datasets/saidas-breast.csv')
 
-# Creates the neural network (DFF) based on the same previous configuration
+
+# Creates the neural network (DFF) based on the previous configuration
 def arise():
     classifier = Sequential()
 
-    classifier.add(Dense(units = 20,# Adds the Input layer with 20 units 
+    classifier.add(Dense(units = 20,# Adds the Input layer 
                          activation='relu', # Activation function
                          kernel_initializer='random_uniform', 
                          input_dim=30))# Number of inputs     
+    
     classifier.add(Dropout(0.25)) # Prevents overfitting through randomly setting a fraction rate of input units to 0        
+    
     classifier.add(Dense(units = 20,# " "  Hidden layer
                          activation='relu', # " " 
                          kernel_initializer='random_uniform'))         
+  
     classifier.add(Dropout(0.25)) # Prevents overfitting through randomly setting a fraction rate of input units to 0 
-    optmizer = keras.optimizers.adadelta(lr=1, rho=0.95,epsilon=None, decay=0.001) # Sets up a custom optimizer
 
     classifier.add(Dense(units = 1, activation='sigmoid')) # " " Output layer
-    classifier.compile(optimizer=optmizer,loss='binary_crossentropy',metrics=['binary_accuracy']) # Compiles with the loss function and the used metric
+
+    optmizer = keras.optimizers.adadelta(lr=1, rho=0.95,epsilon=None, decay=0.001) # Sets up a custom optimizer
+    classifier.compile(optimizer=optmizer, # Compiles with the loss function and the used metric
+                       loss='binary_crossentropy',metrics=['binary_accuracy']) 
     return classifier
 
 dff = KerasClassifier(build_fn=arise, epochs=100, batch_size=4) # Initializes
