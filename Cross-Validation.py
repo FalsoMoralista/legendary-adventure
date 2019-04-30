@@ -1,7 +1,7 @@
 import keras
 import pandas as pd
 from keras.models import Sequential
-from keras.layers import Dense
+from keras.layers import Dense, Dropout
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import cross_val_score
 
@@ -16,11 +16,11 @@ def arise():
                          activation='relu', # Activation function
                          kernel_initializer='random_uniform', 
                          input_dim=30))# Number of inputs     
-
+    classifier.add(Dropout(0.25)) # Prevents overfitting through randomly setting a fraction rate of input units to 0        
     classifier.add(Dense(units = 20,# " "  Hidden layer
                          activation='relu', # " " 
                          kernel_initializer='random_uniform'))         
-
+    classifier.add(Dropout(0.25)) # Prevents overfitting through randomly setting a fraction rate of input units to 0 
     optmizer = keras.optimizers.adadelta(lr=1, rho=0.95,epsilon=None, decay=0.001) # Sets up a custom optimizer
 
     classifier.add(Dense(units = 1, activation='sigmoid')) # " " Output layer
