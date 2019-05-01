@@ -37,13 +37,13 @@ def arise(optimizer, loss, kernel_initializer, activation, neurons):
 dff = KerasClassifier(build_fn=arise) # Initializes
 
 parameters = {
-        'batch_size': [4,10,40],
-        'epochs': [50, 100],
-        'optimizer': ['adam','sgd','adadelta'],
+        'batch_size': [4,10,30],
+        'epochs':  [100,120],
+        'optimizer': ['adam','adadelta'],
         'loss': ['binary_crossentropy','hinge'],
         'kernel_initializer': ['random_uniform', 'normal'],
         'activation':['relu','tanh'],
-        'neurons': [20,14,6],
+        'neurons': [20,12,6],
         }
 
 grid_search = GridSearchCV(estimator=dff,
