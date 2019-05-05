@@ -1,9 +1,11 @@
 import keras
 import pandas as pd
+import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import cross_val_score
+from keras.models import model_from_json
 
 predictors = pd.read_csv('/home/luciano/ic/lectures/breast_cancer/datasets/entradas-breast.csv')
 classes = pd.read_csv('/home/luciano/ic/lectures/breast_cancer/datasets/saidas-breast.csv')
@@ -48,7 +50,23 @@ experiment = cross_val_score(estimator=dff, # Runs the experiment using cross va
 mean = experiment.mean() # Mean of outputed values from the neural network
 sd = experiment.std() # Standard deviation (measures how the network is fitting )
 
+################################  Exporting     ######################################
 classifier = dff.build_fn().to_json() # Format to json
 with open('data/breast/exported/exported_classifier.json','w') as json_file:
     json_file.write(classifier) # Exports it to a folder
 classifier = dff.build_fn().save_weights('data/breast/exported/exported_classifier.h5') # Do same to the weights
+######################################################################################
+################################  Loading     ########################################
+file = open('data/breast/exported/exported_classifier.json','r')
+model = file.read()
+file.close()
+classifier = model_from_json(model)
+classifier.load_weights('data/breast/exported/exported_classifier.h5')
+# Testing the loaded model with a sample data.
+####################################################################################
+new = np.array([[15.80, 8.34, 118, 900, 0.10, 0.26, 0.08, 0.134, 0.178,
+                  0.20, 0.05, 1098, 0.87, 4500, 145.2, 0.005, 0.04, 0.05, 0.015,
+                  0.03, 0.007, 23.15, 16.64, 178.5, 2018, 0.14, 0.185,
+                  0.84, 158, 0.363]])
+test_prevision = classifier.predict(new)
+test_prevision = (test_prevision > 0.5)
