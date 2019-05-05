@@ -9,6 +9,9 @@ predictors = pd.read_csv('/home/luciano/ic/lectures/breast_cancer/datasets/entra
 classes = pd.read_csv('/home/luciano/ic/lectures/breast_cancer/datasets/saidas-breast.csv')
 
 
+# Cross validation is the technique used in order to try to prevent/reduce overfitting
+# by permutating the traning set over iterations.
+#
 # Creates the neural network (DFF) based on the previous configuration
 def arise():
     classifier = Sequential()
@@ -33,6 +36,7 @@ def arise():
                        loss='binary_crossentropy',metrics=['binary_accuracy']) 
     return classifier
 
+
 dff = KerasClassifier(build_fn=arise, epochs=100, batch_size=4) # Initializes
 
 experiment = cross_val_score(estimator=dff, # Runs the experiment using cross validation
@@ -43,3 +47,8 @@ experiment = cross_val_score(estimator=dff, # Runs the experiment using cross va
 
 mean = experiment.mean() # Mean of outputed values from the neural network
 sd = experiment.std() # Standard deviation (measures how the network is fitting )
+
+classifier = dff.build_fn().to_json() # Format to json
+with open('data/breast/exported/exported_classifier.json','w') as json_file:
+    json_file.write(classifier) # Exports it to a folder
+classifier = dff.build_fn().save_weights('data/breast/exported/exported_classifier.h5') # Do same to the weights
