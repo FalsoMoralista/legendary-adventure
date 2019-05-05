@@ -4,10 +4,15 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import GridSearchCV
+import os
+from google.colab import drive
+drive.
+os.listdir()
+
 
 predictors = pd.read_csv('/home/luciano/ic/lectures/breast_cancer/datasets/entradas-breast.csv')
 classes = pd.read_csv('/home/luciano/ic/lectures/breast_cancer/datasets/saidas-breast.csv')
-
+    
 optmizer = keras.optimizers.adadelta(lr=1, rho=0.95,epsilon=None, decay=0.001) # Sets up a custom optimizer
 
 # Creates the neural network (DFF) based on the parametrized configuration
