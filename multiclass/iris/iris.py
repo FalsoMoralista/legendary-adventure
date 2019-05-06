@@ -9,8 +9,8 @@ from keras.utils import np_utils
 
 dataset = pd.read_csv('../../data/iris/iris.csv')
 
-predictors = dataset.iloc[:,0:4].values
-classes = dataset.iloc[:,4].values
+predictors = dataset.iloc[:, 0:4].values
+classes = dataset.iloc[:, 4].values
 
 labelencoder = LabelEncoder()
 
@@ -27,31 +27,33 @@ classes_dummy = np_utils.to_categorical(classes)
 # a sample being from a specific class.   
 def build():
     classifier = Sequential()
-    classifier.add(Dense(units=4,
+    classifier.add(Dense(units=6,
                          activation='relu',
                          kernel_initializer='random_uniform',
                          input_dim=4))
     classifier.add(Dropout(0.125))
-    classifier.add(Dense(units = 3,# " "  Hidden layer
+    classifier.add(Dense(units = 6,# " "  Hidden layer
                          activation='relu', # " " 
                          kernel_initializer='random_uniform'))         
     classifier.add(Dropout(0.125)) # Prevents overfitting through randomly setting a fraction rate of input units to 0 
-    classifier.add(Dense(units = 4,# " "  Hidden layer
+    classifier.add(Dense(units = 6,# " "  Hidden layer
                          activation='relu', # " " 
                          kernel_initializer='random_uniform'))         
     classifier.add(Dropout(0.125)) # Prevents overfitting through randomly setting a fraction rate of input units to 0 
     classifier.add(Dense(units = 3, activation='softmax')) # " " Output layer
-    optmizer = keras.optimizers.adadelta(lr=1.1, rho=0.95,epsilon=None, decay=0.001) # Sets up a custom optimizer
+    optmizer =keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+    # keras.optimizers.adadelta(lr=1.1, rho=0.95,epsilon=None, decay=0.001) # Sets up a custom optimizer
     classifier.compile(optimizer=optmizer, # Compiles with the loss function and the used metric
                        loss='categorical_crossentropy',
                        metrics=['categorical_accuracy']) 
     return classifier
 
-dff = KerasClassifier(build_fn=build, epochs=1000, batch_size=4) # Initializes
+dff = KerasClassifier(build_fn=build, epochs=1000, batch_size=6) # Initializes
 experiment = cross_val_score(estimator=dff, # Runs the experiment using cross validation
                              X=predictors,
                              y=classes, 
                              cv=4, # Determinate the cross validation "iterations"
                              scoring='accuracy')
+
 mean = experiment.mean() # Mean of outputed values from the neural network
 sd = experiment.std() # Standard deviation (measures how the network is fitting )
