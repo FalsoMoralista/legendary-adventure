@@ -62,6 +62,7 @@ model = file.read()
 file.close()
 classifier = model_from_json(model)
 classifier.load_weights('data/breast/exported/exported_classifier.h5')
+
 # Testing the loaded model with a sample data.
 ####################################################################################
 new = np.array([[15.80, 8.34, 118, 900, 0.10, 0.26, 0.08, 0.134, 0.178,
