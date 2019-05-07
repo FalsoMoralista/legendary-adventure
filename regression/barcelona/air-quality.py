@@ -3,7 +3,7 @@ import os
 print(os.getcwd())
 
 df = pd.read_csv('../../data/barcelona-data-sets/air_quality_Nov2017.csv')
-
+df['Station'].value_counts()
 # Drops not used attribute
 df = df.drop('DateTime',axis=1) 
 
@@ -52,36 +52,85 @@ hotEncoder = OneHotEncoder(categorical_features=[0,1,2,3,5,6,8,9,11])
 predictors = hotEncoder.fit_transform(predictors).toarray()
 
 from keras.models import Sequential
-from keras.layers import Dense
+from keras.layers import Dense, Dropout
 from keras.wrappers.scikit_learn import KerasRegressor
 from sklearn.model_selection import cross_val_score
 
 
 # Builds the feed forward neural network 
+# -- A question that came up on my mind was how the model will be able to predict 
+# the air quality for a given station since we are taking as input data from 5 
+# different stations and outputing a unique value. Then i remembered that 
+# we used geolocation as attributes to train the model, so when the put as input 
+# the data for a single station it should predict correctly, cause the model
+# was trained to use the location as attribute to predict the air quality.--
 def build():
     regressor = Sequential()
     regressor.add(Dense(units=403, activation='relu', input_dim=806)) # Input/first layer
+    regressor.add(Dropout(0.125))
     regressor.add(Dense(units=403, activation='relu')) # Second layer
+    regressor.add(Dropout(0.125))
     regressor.add(Dense(units=1,activation='linear')) # Output
     regressor.compile(loss='mean_absolute_error', optimizer='adam', metrics = ['mean_absolute_error'])
     return regressor
 
-
-regressor = KerasRegressor(build_fn=build, epochs=100, batch_size=3)
-results= cross_val_score(estimator=regressor, X = predictors, y = real_air_quality, cv=2, scoring = 'neg_median_absolute_error')
+regressor = KerasRegressor(build_fn=build, epochs=250, batch_size=5)
+results= cross_val_score(estimator=regressor, X = predictors, y = real_air_quality, cv=4, scoring = 'neg_median_absolute_error')
 
 mean=results.mean()
 sd = results.std()
 print(abs(mean))
 
-################################  Exporting     ######################################
+#test_station = df.iloc[73,2:14].values
+#test_station = test_station.reshape(-1,1)
+#test_station[:] = labelEncoder3.fit_transform(test_station[:])
+#labelEncoder3 = LabelEncoder()
+#test_station[0] = labelEncoder3.fit_transform(test_station[0])
+#test_station[1] = labelEncoder3.fit_transform(test_station[1])
+#test_station[2] = labelEncoder3.fit_transform(test_station[2])
+#test_station[3] = labelEncoder3.fit_transform(test_station[3])
+#test_station[5] = labelEncoder3.fit_transform(test_station[5])
+#test_station[6] = labelEncoder3.fit_transform(test_station[6])
+#test_station[8] = labelEncoder3.fit_transform(test_station[8])
+#test_station[9] = labelEncoder3.fit_transform(test_station[9])
+#test_station[11] = labelEncoder3.fit_transform(test_station[11])
+
+# Now let us test with a instance of a station 
+
+# Load Models
+from keras.models import model_from_json
+file = open('exported_regressor_v1.json','r')
+model = file.read()
+file.close()
+regression_model = model_from_json(model)
+regression_model.load_weights('exported_regressor_v1.h5')
+
+single_df = predictors[0,:] # Get a station sample
+
+import numpy as np
+test_station = np.array([single_df]) # Format to np array
+test_air_quality_prediction = regression_model.predict(test_station) # Runs the prediction
+print(abs(test_air_quality_prediction))
+################################# Result ####################################################
+# --Tested with predictors[0,:] in which the expected result was 0 and we found 2.105       #
+# we also tested with predictors[1,:] in which the expected result was 1 and we found 0.507 #
+#############################################################################################
+
+
+################################ Exporting ##########################################
 reg = regressor.build_fn().to_json() # Format to json
-with open('exported_regressor.json','w') as json_file:
+with open('exported_regressor_v1.json','w') as json_file:
     json_file.write(reg) # Exports it
-reg = regressor.build_fn().save_weights('exported_regressor.h5') # Do same to the weights
+reg = regressor.build_fn().save_weights('exported_regressor_v1.h5') # Do same to the weights
 
-
-
+################################  Loading     ########################################
+from keras.models import model_from_json
+file = open('exported_regressor_v1.json','r')
+model = file.read()
+file.close()
+regression_model = model_from_json(model)
+regression_model.load_weights('exported_regressor_v1.h5')
+regression_model.predict(test_station[:])
 
 
 
