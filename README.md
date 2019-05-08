@@ -6,3 +6,9 @@
 
 ## Description
  This repository was initially created to **aggregate the content** about **neural networks** learned by me. Later on i decided to try to organize it by **documentating & anexing** the **resources** that **i am using to learn** so that **others** that wants to **get started** can **easily** do it **independely** *starting through here*.
+
+## FAQ
+
+- **Why "legendary-adventure"?**
+    
+    <img src="https://i.imgur.com/aW6QDKg.png" alt="legendary-adventure" width="550" height="30">
