@@ -4,7 +4,7 @@
   <img  src="https://media.giphy.com/media/oj2GhTqAIoNIk/giphy.gif" alt="Bilbo Adventure" style="width: 480px; height: 196px; left: 0px; top: 0px; opacity: 0;">
 </p>
 
-## :scroll: Table of contents :scroll:
+## Table of contents
 - [Description](#description)
 - [Data](#data)  
 - [FAQ](#faq)
@@ -13,6 +13,8 @@
  This repository was initially created to **aggregate the content** about **neural networks** learned by me. Later on i decided to try to organize it by **documentating & anexing** the **resources** that **i am using to learn** so that **others** that wants to **get started** can **easily** do it **independely** *starting through here*.
 
 ## Data
+<p align="center"><img src="https://i.pinimg.com/564x/0b/ac/ed/0baced7191ba1bd1cc196bdeb2fee285.jpg" alt="Hobbit House"></p>
+
   - All the data that we will be using in the experiments will be placed in the [data](/data) section. Description and additional resources are shown below.
     - The [breast-cancer](data/breast) diagnostic dataset, containing features from digitalized cell images and its respectively classification. See original [here](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+%28Diagnostic%29).
     - The [iris](data/iris) dataset, containing data from 150 plants of 3 different classes. Original [here](https://archive.ics.uci.edu/ml/datasets/Iris).
