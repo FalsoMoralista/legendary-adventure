@@ -2,7 +2,7 @@ import pandas as pd
 import os
 print(os.getcwd())
 
-df = pd.read_csv('../../data/barcelona-data-sets/air_quality_Nov2017.csv')
+df = pd.read_csv('air_quality_Nov2017.csv')
 df['Station'].value_counts()
 # Drops not used attribute
 df = df.drop('DateTime',axis=1) 
@@ -74,7 +74,7 @@ def build():
     regressor.compile(loss='mean_absolute_error', optimizer='adam', metrics = ['mean_absolute_error'])
     return regressor
 
-regressor = KerasRegressor(build_fn=build, epochs=250, batch_size=5)
+regressor = KerasRegressor(build_fn=build, epochs=1000, batch_size=5)
 results= cross_val_score(estimator=regressor, X = predictors, y = real_air_quality, cv=4, scoring = 'neg_median_absolute_error')
 
 mean=results.mean()
@@ -105,7 +105,7 @@ file.close()
 regression_model = model_from_json(model)
 regression_model.load_weights('exported_regressor_v1.h5')
 
-single_df = predictors[0,:] # Get a station sample
+single_df = predictors[1,:] # Get a station sample
 
 import numpy as np
 test_station = np.array([single_df]) # Format to np array
