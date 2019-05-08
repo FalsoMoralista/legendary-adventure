@@ -7,8 +7,8 @@ from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import cross_val_score
 from keras.models import model_from_json
 
-predictors = pd.read_csv('/home/luciano/ic/lectures/breast_cancer/datasets/entradas-breast.csv')
-classes = pd.read_csv('/home/luciano/ic/lectures/breast_cancer/datasets/saidas-breast.csv')
+predictors = pd.read_csv('entradas-breast.csv')
+classes = pd.read_csv('saidas-breast.csv')
 
 
 # Cross validation is the technique used in order to try to prevent/reduce overfitting

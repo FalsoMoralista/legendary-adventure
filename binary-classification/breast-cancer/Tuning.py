@@ -10,8 +10,8 @@ drive.
 os.listdir()
 
 
-predictors = pd.read_csv('/home/luciano/ic/lectures/breast_cancer/datasets/entradas-breast.csv')
-classes = pd.read_csv('/home/luciano/ic/lectures/breast_cancer/datasets/saidas-breast.csv')
+predictors = pd.read_csv('entradas-breast.csv')
+classes = pd.read_csv('saidas-breast.csv')
     
 optmizer = keras.optimizers.adadelta(lr=1, rho=0.95,epsilon=None, decay=0.001) # Sets up a custom optimizer
 

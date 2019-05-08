@@ -1,7 +1,7 @@
 import pandas as pd
 
-predictors = pd.read_csv('/home/luciano/ic/lectures/breast_cancer/datasets/entradas-breast.csv')
-classes = pd.read_csv('/home/luciano/ic/lectures/breast_cancer/datasets/saidas-breast.csv')
+predictors = pd.read_csv('entradas-breast.csv')
+classes = pd.read_csv('saidas-breast.csv')
 
 from sklearn.model_selection import train_test_split
 # Splits the dataset between testing and training where the training collection represents 75% of the set 
@@ -37,7 +37,7 @@ precision = accuracy_score(testing_class, predicoes)
 matrix = confusion_matrix(testing_class, predicoes)
 #result = classifier.evaluate(predictors_test,testing_class)
 ####################################################################
-pesos0 = classifier.layers[0].get_weights()
-pesos1 = classifier.layers[1].get_weights()
-print(pesos0)
-print(pesos1)
+weights0 = classifier.layers[0].get_weights()
+weights1 = classifier.layers[1].get_weights()
+print(weights0)
+print(weights1)
