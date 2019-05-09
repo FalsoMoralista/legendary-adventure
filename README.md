@@ -23,7 +23,7 @@
     - The [barcelona](data/barcelona-data-sets) datasets, containing: Administration, Urban environment, Population, Territory, Economy and Business datasets from the city of Barcelona. Original [link](https://www.kaggle.com/xvivancos/barcelona-data-sets).
 
 ## Experiments
-  The experiments are divided according to the class of the problems: [binary-classification](/binary-classification), [multiclass](/multiclass) and [regression](/regression).
+  The experiments are divided according to the class of the problems: [binary-classification](/binary-classification), [multiclass](/multiclass) and [regression](/regression). 
   - **Binary Classification**
     For the task of binary classification, the problem will be classifying elements of a given set into two groups as you can see from the examples below.
     1. **Breast Cancer**
@@ -33,12 +33,64 @@
         For that we start off by importing the dataset using the [Pandas](https://github.com/pandas-dev/pandas) library as seen below:
         ```python
             import pandas as pd
-            predictors = pd.read_csv('entradas-breast.csv')
-            diagnosis = pd.read_csv('saidas-breast.csv')
+            predictors = pd.read_csv('inputs-breast.csv')
+            diagnosis = pd.read_csv('outputs-breast.csv')
         ```
         ***predictors*** are the predictor attributes, that is, the **features** that we will use **to train** our algorithm to **classify** the tumor.
         
         ***diagnosis*** contains the respective **diagnosis for each cell** from our dataset. With that we can **evaluate** the eficacy of our model when **comparing** the **outputed values** from our model with the **expected values**, during the training.
+        
+        Then we need to split our dataset between testing and training:
+        ```python
+        from sklearn.model_selection import train_test_split
+        # Splits the dataset between testing and training where the training collection represents 75% of the set 
+        predictors_training, predictors_test, training_diagnosis, testing_diagnosis = train_test_split(predictors, diagnosis, test_size=0.25) 
+        ```
+        Then we will build our neural network as follows:
+        ```python
+        import keras
+        from keras.models import Sequential
+        from keras.layers import Dense
+
+        classifier = Sequential()
+        # Builds the first layer of our neural network
+        classifier.add(Dense(units=20,
+                     activation='relu',
+                     kernel_initializer='random_uniform',
+                     input_dim=30,
+                     use_bias=True))
+        ```
+        First we initialize our classifier adding up the first layer. By *Dense* we mean that our layer will be fully connected.
+        Our model will have 20 neurons with 30 inputs (30 features) using the random uniform function to initialize the weights.
+        You can find more information about the documentation on the [Keras](https://keras.io/) website.
+        
+        Then we will add a hidden layer:
+        ```python
+        # Builds a hidden layer with the configuration below
+        classifier.add(Dense(units=20,
+                     activation='relu',
+                     kernel_initializer='random_uniform',
+                     use_bias=True)) 
+        ```
+        Configure our optimizer and add the output layer:
+        
+        Note that here i configured my own, so you can check the documentation on the Keras website and configure your own as you want.
+        ```python
+        # Builds up a custom optimizer with the setup below
+        optimizer = keras.optimizers.Adadelta(lr=1.0,rho=0.95, epsilon=None, decay=0.001)
+        # Adds an output layer
+        classifier.add(Dense(units=1, activation='sigmoid'))
+        ```
+        The optimizer is the function responsable to reduce the error, you can check on the Keras documentation for other options and its parameters. I've tested my own there so i think you should try yourself too.
+        
+        In the output layer we will have only an output, since we will classify as a binary value. For that we use the activation function: **sigmoid** to output values between 0 and 1. 
+        
+        Then we will compile our model, adding up a loss function and our optimizer.
+        Note that the loss function will be used to output a value that indicates how our model fits, in this case, we will aim to minimize it.  
+        ```python
+        # Compiles the network adding up the loss function & the custom optimizer
+        classifier.compile(optimizer=optimizer,loss='binary_crossentropy')
+        ```
         
 ## FAQ
 - **legendary-adventure**
