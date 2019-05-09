@@ -6,7 +6,7 @@
 
 
 ## Description
- This repository was initially created to **aggregate the content** about **neural networks** learned by me. Later on i decided to try to organize it by **documentating & anexing** the **resources** that **i am using to learn** so that **others** that wants to **get started** can **easily** do it **independely** *starting through here*.
+In this repository you can find a set of examples of how to build small projects with different neural network architectures.
 
 ## Table of contents
 - [Data](#data)  
@@ -28,7 +28,7 @@
     For the task of binary classification, the problem will be classifying elements of a given set into two groups as you can see from the examples below.
     1. **Breast Cancer**
     
-        In this example we use the data from the Breast Cancer dataset to build a **Deep Feed Forward** (DFF) neural network to **determine whether a tumor is malignant or benign**.
+        In this example we use the data from the Breast Cancer dataset to build a **Feed Forward** (FF) neural network to **determine whether a tumor is malignant or benign**.
         
         For that we start off by importing the dataset using the [Pandas](https://github.com/pandas-dev/pandas) library as seen below:
         ```python
@@ -113,3 +113,5 @@
    
    - I just wanted to say how cool I found this Github feature I came across when starting this repository. 
    
+   ## About
+     This repository was initially created to **aggregate the content** about **neural networks** learned by me. Later on i decided to try to organize it by **documentating & anexing** the **resources** that **i am using to learn** so that **others** that wants to **get started** can **easily** do it **independely** *starting through here*.
