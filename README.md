@@ -12,6 +12,7 @@ In this repository you can find a set of examples of how to build small projects
 - [Data](#data)  
 - [Experiments](#experiments)
 - [FAQ](#faq)
+- [About](#about)
 
 ## Data
 <p align="center"><img src="https://i.pinimg.com/564x/0b/ac/ed/0baced7191ba1bd1cc196bdeb2fee285.jpg" alt="Hobbit House"></p>
@@ -113,5 +114,6 @@ In this repository you can find a set of examples of how to build small projects
    
    - I just wanted to say how cool I found this Github feature I came across when starting this repository. 
    
-   ## About
-     This repository was initially created to **aggregate the content** about **neural networks** learned by me. Later on i decided to try to organize it by **documentating & anexing** the **resources** that **i am using to learn** so that **others** that wants to **get started** can **easily** do it **independely** *starting through here*.
+## About
+
+This repository was initially created to **aggregate the content** about **neural networks** learned by me. Later on i decided to try to organize it by **documentating & anexing** the **resources** that **i am using to learn** so that **others** that wants to **get started** can **easily** do it **independely** *starting through here*.
