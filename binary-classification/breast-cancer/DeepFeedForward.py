@@ -1,11 +1,11 @@
 import pandas as pd
 
 predictors = pd.read_csv('entradas-breast.csv')
-classes = pd.read_csv('saidas-breast.csv')
+diagnosis = pd.read_csv('saidas-breast.csv')
 
 from sklearn.model_selection import train_test_split
 # Splits the dataset between testing and training where the training collection represents 75% of the set 
-predictors_training, predictors_test, training_class, testing_class = train_test_split(predictors, classes, test_size=0.25) 
+predictors_training, predictors_test, training_class, testing_class = train_test_split(predictors, diagnosis, test_size=0.25) 
 
 import keras
 
