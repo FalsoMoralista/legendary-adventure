@@ -74,7 +74,7 @@ def build():
     regressor.compile(loss='mean_absolute_error', optimizer='adam', metrics = ['mean_absolute_error'])
     return regressor
 
-regressor = KerasRegressor(build_fn=build, epochs=1000, batch_size=5)
+regressor = KerasRegressor(build_fn=build, epochs=1000, batch_size=806)
 results= cross_val_score(estimator=regressor, X = predictors, y = real_air_quality, cv=4, scoring = 'neg_median_absolute_error')
 
 mean=results.mean()

@@ -29,7 +29,7 @@ classifier.add(Dense(units=1, activation='sigmoid'))
 classifier.compile(optimizer=optimizer,loss='binary_crossentropy')
 
 # Fits up the data to the network
-classifier.fit(predictors_training, training_diagnosis, batch_size=4, epochs=100)
+classifier.fit(predictors_training, training_diagnosis, batch_size=30, epochs=100)
 
 # Evaluation:
 predictions = classifier.predict(predictors_test)
@@ -37,3 +37,5 @@ predictions = (predictions > 0.5) # format to boolean values
 
 from sklearn.metrics import accuracy_score
 precision = accuracy_score(testing_diagnosis, predictions) # This evaluates the precision of our model (over the training data)
+
+print(precision)
