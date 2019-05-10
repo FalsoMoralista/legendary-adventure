@@ -24,7 +24,10 @@ In this repository you can find a set of examples of how to build small projects
     - The [barcelona](data/barcelona-data-sets) datasets, containing: Administration, Urban environment, Population, Territory, Economy and Business datasets from the city of Barcelona. Original [link](https://www.kaggle.com/xvivancos/barcelona-data-sets).
 
 ## Experiments
-  The experiments are divided according to the class of the problems: [binary-classification](/binary-classification), [multiclass](/multiclass) and [regression](/regression). 
+ > The experiments are divided according to the class of the problems: [binary-classification](/binary-classification), [multiclass](/multiclass) and [regression](/regression). 
+   <p align="center"><img src="http://img-fan.theonering.net/~rolozo/images/wyatt/barrels.jpg"  height=350>
+</p>
+
   - **Binary Classification**
     For the task of binary classification, the problem will be classifying elements of a given set into two groups as you can see from the examples below.
     1. **Breast Cancer**
