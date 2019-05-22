@@ -9,15 +9,16 @@ from keras.utils import np_utils
 
 dataset = pd.read_csv('../../data/iris/iris.csv')
 
+# Splits the dataframe between predictor attributes and classes
 predictors = dataset.iloc[:, 0:4].values
 classes = dataset.iloc[:, 4].values
 
 labelencoder = LabelEncoder()
 
-classes = labelencoder.fit_transform(classes)
+classes = labelencoder.fit_transform(classes) # Encodes categorical values
 classes_dummy = np_utils.to_categorical(classes)
 
-# By default builds a fully connected neural network (DeepFeedForward - DNN) that 
+# By default builds a fully connected neural network (FeedForward - FF) that 
 # has as inputs 4 attributes (Sepal and Petal -  width/length), that being 4 neurons
 # on the input layer, and 3 hidden layers with 3 neurons on each of classes.
 # --The configuration used on the hidden and input layer is the activation function 'relu' &
@@ -41,8 +42,7 @@ def build():
                          kernel_initializer='random_uniform'))         
     classifier.add(Dropout(0.125)) # Prevents overfitting through randomly setting a fraction rate of input units to 0 
     classifier.add(Dense(units = 3, activation='softmax')) # " " Output layer
-    optmizer =keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
-    # keras.optimizers.adadelta(lr=1.1, rho=0.95,epsilon=None, decay=0.001) # Sets up a custom optimizer
+    optmizer = keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
     classifier.compile(optimizer=optmizer, # Compiles with the loss function and the used metric
                        loss='categorical_crossentropy',
                        metrics=['categorical_accuracy']) 

@@ -126,8 +126,12 @@ model.compile(optimizer='adam',
               loss='mean_squared_error')
 
 palau_reial = np.ndarray(palau_reial)
+observ_fabra = np.ndarray(observ_fabra)
+eixample_air = np.ndarray(eixample_air)
+vall_hebron = np.ndarray(vall_hebron)
+gracia = np.ndarray(gracia)
 
-model.fit(x=[palau_reial, observ_fabra, eixample_air, vall_hebron, gracia], y=[palau_air, observ_air, eixample_air,vall_air,gracia_air], epochs=10000,batch_size=2853)
+model.fit([palau_reial, observ_fabra, eixample_air, vall_hebron, gracia], [palau_air, observ_air, eixample_air,vall_air,gracia_air], epochs=10000,batch_size=2853)
 
 prediction_na, prediction_eu, prediction_jp = model.predict(predictors)
 
