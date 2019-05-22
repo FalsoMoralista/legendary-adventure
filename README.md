@@ -110,6 +110,77 @@ In this repository you can find a set of examples of how to build small projects
         print(precision)
         ```
         
+ - **Multiclass**
+   In the following experiments our task will be classifying elements of a given set into **multiple groups**. 
+    1. **Iris**
+    
+       In this example we use the data provided from the **Iris dataset** to build and train a classifier to **determinate a plant type**. For that we will **introduce** the **concepts** of:
+        
+        - Dummy variables
+        - Dropout
+        - Cross Validation
+             
+        We **start by encoding** our classes:
+        ```python
+        classes = labelencoder.fit_transform(classes) # Encodes categorical values
+        classes_dummy = np_utils.to_categorical(classes)
+        ```
+        We do it because the **Iris dataset requires that we transform/encode our categorical attributes** (plant classes) into numerical values, **since the plant classes are represented as names** as shown below:
+        
+        - Iris Setosa
+        - Iris Versicolour
+        - Iris Virginica
+        
+        Then, **build our model** as same as shown before, but this time in a shape of a **function** and we will be also using **another activation function** on the output layer, since now we have a **multiclass task**.
+        ```python
+        
+        # By default builds a fully connected neural network (FeedForward - FF) that 
+        # has as inputs 4 attributes (Sepal and Petal -  width/length), that being 4 neurons
+        # on the input layer, and 3 hidden layers with 3 neurons on each of classes.
+        # --The configuration used on the hidden and input layer is the activation function 'relu' &
+        # the initializer function was set to the default function ('normal'). It was also added
+        # a dropout rate of 33% between each layer.
+        # --The output function was set to softmax cause it gives as result the probability of 
+        # a sample being from a specific class.   
+        def build():
+            classifier = Sequential()
+            classifier.add(Dense(units=6,
+                         activation='relu',
+                         kernel_initializer='random_uniform',
+                         input_dim=4))
+            classifier.add(Dropout(0.125))
+            classifier.add(Dense(units = 6,# " "  Hidden layer
+                         activation='relu', # " " 
+                         kernel_initializer='random_uniform'))         
+            classifier.add(Dropout(0.125)) # Prevents overfitting through randomly setting a fraction rate of input units to 0 
+            classifier.add(Dense(units = 6,# " "  Hidden layer
+                         activation='relu', # " " 
+                         kernel_initializer='random_uniform'))         
+            classifier.add(Dropout(0.125)) # Prevents overfitting through randomly setting a fraction rate of input units to 0 
+            classifier.add(Dense(units = 3, activation='softmax')) # " " Output layer
+            optmizer = keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+            classifier.compile(optimizer=optmizer, # Compiles with the loss function and the used metric
+                       loss='categorical_crossentropy',
+                       metrics=['categorical_accuracy']) 
+            return classifier      
+            
+        ```
+        The concept of **Dropout** that we didn't used on the previous model that consists in **randomly setting a fraction rate of input units to 0** at each update during training time, which **helps prevent overfitting**.
+        
+        Now, we **run** our model by:
+        ```python
+        
+        dff = KerasClassifier(build_fn=build, epochs=1000, batch_size=6) # Initializes
+        experiment = cross_val_score(estimator=dff, # Runs the experiment using cross validation
+                             X=predictors,
+                             y=classes, 
+                             cv=4, # Determinate the cross validation "iterations"
+                             scoring='accuracy')
+                             
+        ```
+      
+      > Note that on the previous experiment we splitted our data between **training and test**, that being 75-25. That may be a problem because **our model won't be trained over a portion of 25% of our dataset**, that means that we may be **biasing** it. In order to resolve that we use **Cross Validation**. The Cross Validation allows us to **split our data** like on the previous example but this time, **instead of using static portions** of the dataset to train/test, **we change** the portion of the data that we are using **on each iteration**, so that we **train and test** our model **all over the dataset**. 
+        
 ## FAQ
 - **legendary-adventure**
 
