@@ -56,8 +56,8 @@ prediction_na, prediction_eu, prediction_jp = model.predict(predictors)
 # This will be used later to fill null values with a probabilistic distribution
 def fillna():    
     arr = df['Publisher'].value_counts()
-    index =  arr2.index
-    values = arr2.values
+    index =  arr.index
+    values = arr.values
     
     probabilities = []
 

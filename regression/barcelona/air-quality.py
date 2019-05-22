@@ -1,6 +1,4 @@
 import pandas as pd
-import os
-print(os.getcwd())
 
 df = pd.read_csv('air_quality_Nov2017.csv')
 df['Station'].value_counts()
