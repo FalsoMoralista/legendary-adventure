@@ -1,5 +1,5 @@
 # :sparkles: Legendary Adventure :sparkles:
-> Simple Neural Network projects using the [Keras](https://keras.io/) library. 
+> Simple Neural Networks projects using the [Keras](https://keras.io/) library. 
 <p align="center">
   <img  src="https://media.giphy.com/media/oj2GhTqAIoNIk/giphy.gif" alt="Bilbo Adventure" style="width: 480px; height: 196px; left: 0px; top: 0px; opacity: 0;">
 </p>
